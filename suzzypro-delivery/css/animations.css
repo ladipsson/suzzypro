@@ -1,0 +1,98 @@
+/* ==========================================================================
+   SuzzyPro Delivery — Animations
+   ========================================================================== */
+
+/* ---------- Scroll reveal ---------- */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal="up"] { transform: translateY(32px); }
+[data-reveal="left"] { transform: translateX(-32px); }
+[data-reveal="right"] { transform: translateX(32px); }
+[data-reveal="zoom"] { transform: scale(0.92); }
+
+[data-reveal].in-view {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* stagger children via inline --delay custom property */
+[data-reveal] { transition-delay: var(--delay, 0s); }
+
+/* ---------- Keyframes ---------- */
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+@keyframes draw-path {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes move-pkg {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+
+@keyframes ripple-anim {
+  to { transform: scale(3); opacity: 0; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.floating { animation: float-y 4.5s ease-in-out infinite; }
+.floating-slow { animation: float-y 6.5s ease-in-out infinite; }
+.floating-delay { animation-delay: 1.2s; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 44px; height: 44px;
+  border: 3px solid var(--color-primary-light);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in { animation: slide-up-fade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ---------- Page loader ---------- */
+.page-loader {
+  position: fixed; inset: 0;
+  background: var(--color-bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.page-loader.hidden { opacity: 0; visibility: hidden; }
+
+/* ---------- Progress timeline (tracking page) ---------- */
+@keyframes fill-progress {
+  from { width: 0; }
+}
+.timeline-fill { animation: fill-progress 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes pop-check {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.pop-check { animation: pop-check 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ---------- Card elevation on hover handled in style.css; button ripple handled via JS-injected span ---------- */
